@@ -3,6 +3,10 @@
 @tailwind utilities;
 @layer base {
   :root {
+    --primary: 220 90% 56%; /* Example theme color */
+    --secondary: 280 85% 36%; /* Secondary color */
+    --card: 240 3% 92%;
+    --border: 240 5% 85%;
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
     --card: 0 0% 100%;

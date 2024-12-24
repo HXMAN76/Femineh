@@ -6,7 +6,9 @@ module.exports = {
     		animation: {
     			'fade-in': 'fadeIn 5s forwards',
     			'fade-letter': 'fadeLetter 5s forwards',
-    			ripple: 'ripple var(--duration,2s) ease calc(var(--i, 0)*.2s) infinite'
+    			ripple: 'ripple var(--duration,2s) ease calc(var(--i, 0)*.2s) infinite',
+    			grid: 'grid 15s linear infinite',
+    			meteor: 'meteor 5s linear infinite'
     		},
     		keyframes: {
     			fadeIn: {
@@ -33,6 +35,27 @@ module.exports = {
     				},
     				'50%': {
     					transform: 'translate(-50%, -50%) scale(0.9)'
+    				}
+    			},
+    			grid: {
+    				'0%': {
+    					transform: 'translateY(-50%)'
+    				},
+    				'100%': {
+    					transform: 'translateY(0)'
+    				}
+    			},
+    			meteor: {
+    				'0%': {
+    					transform: 'rotate(215deg) translateX(0)',
+    					opacity: '1'
+    				},
+    				'70%': {
+    					opacity: '1'
+    				},
+    				'100%': {
+    					transform: 'rotate(215deg) translateX(-500px)',
+    					opacity: '0'
     				}
     			}
     		},
