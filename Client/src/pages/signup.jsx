@@ -1,13 +1,40 @@
 import React from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from "react-router-dom";
 import logo from "../assets/image.png";
 
 const SignUp = () => {
-  const navigate = useNavigate(); // Initialize the navigation hook
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    navigate("/formspage"); // Redirect to the forms page
+
+    // Collect form fields
+    const name = e.target.name.value;
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    try {
+      const response = await fetch("http://localhost:5000/api/signup", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, email, password }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        console.log("Signup success:", data);
+        // Save the user ID in localStorage so we can update their profile next
+        localStorage.setItem("userId", data.user._id);
+
+        // Navigate to the forms page
+        navigate("/formspage");
+      } else {
+        alert(data.message || "Signup failed");
+      }
+    } catch (error) {
+      console.error("Signup error:", error);
+      alert("Error signing up. Check console for details.");
+    }
   };
 
   return (
@@ -18,11 +45,15 @@ const SignUp = () => {
       >
         {/* Logo */}
         <div className="flex justify-center mb-4 sm:mb-6">
-          <img src={logo} alt="Logo" className="w-full max-w-[150px] h-auto object-contain" />
+          <img
+            src={logo}
+            alt="Logo"
+            className="w-full max-w-[150px] h-auto object-contain"
+          />
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit}> {/* Attach handleSubmit to the form */}
+        <form onSubmit={handleSubmit}>
           {/* Name Field */}
           <div className="mb-4">
             <label
@@ -34,7 +65,7 @@ const SignUp = () => {
             <input
               type="text"
               id="name"
-              className="w-full p-2 rounded-lg border border-[#8B3C3C] bg-transparent text-black placeholder-gray-700 focus:outline-none focus:ring-2 focus:ring-[#8B3C3C]"
+              className="w-full p-2 rounded-lg border border-[#8B3C3C] bg-transparent text-black placeholder-gray-700 focus:outline-none"
               placeholder="Enter your full name"
               required
             />
@@ -51,7 +82,7 @@ const SignUp = () => {
             <input
               type="email"
               id="email"
-              className="w-full p-2 rounded-lg border border-[#8B3C3C] bg-transparent text-black placeholder-gray-700 focus:outline-none focus:ring-2 focus:ring-[#8B3C3C]"
+              className="w-full p-2 rounded-lg border border-[#8B3C3C] bg-transparent text-black placeholder-gray-700 focus:outline-none"
               placeholder="Enter your email"
               required
             />
@@ -68,7 +99,7 @@ const SignUp = () => {
             <input
               type="password"
               id="password"
-              className="w-full p-2 rounded-lg border border-[#8B3C3C] bg-transparent text-black placeholder-gray-700 focus:outline-none focus:ring-2 focus:ring-[#8B3C3C]"
+              className="w-full p-2 rounded-lg border border-[#8B3C3C] bg-transparent text-black placeholder-gray-700 focus:outline-none"
               placeholder="Enter your password"
               required
             />
@@ -79,13 +110,10 @@ const SignUp = () => {
             <input
               type="checkbox"
               id="privacy"
-              className="w-4 h-4 mr-2 text-[#8B3C3C] border border-[#8B3C3C] rounded focus:ring-2 focus:ring-[#8B3C3C]"
+              className="w-4 h-4 mr-2 text-[#8B3C3C] border border-[#8B3C3C] rounded"
               required
             />
-            <label
-              htmlFor="privacy"
-              className="text-sm text-black"
-            >
+            <label htmlFor="privacy" className="text-sm text-black">
               I agree to the{" "}
               <a href="/privacy" className="text-[#8B3C3C] underline">
                 Privacy Policy
@@ -101,7 +129,7 @@ const SignUp = () => {
           <div className="flex justify-center mt-4">
             <button
               type="submit"
-              className="w-32 sm:w-36 h-10 bg-gradient-to-r from-[#8B3C3C] to-[#B76E6E] text-[#F0F0F0] rounded-lg shadow-md hover:scale-105 transition-all duration-200 flex items-center justify-center text-sm font-semibold"
+              className="w-32 sm:w-36 h-10 bg-gradient-to-r from-[#8B3C3C] to-[#B76E6E] text-[#F0F0F0] rounded-lg shadow-md hover:scale-105 transition-all duration-200 text-sm font-semibold"
             >
               Sign Up
             </button>
