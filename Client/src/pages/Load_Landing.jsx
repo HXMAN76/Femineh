@@ -14,6 +14,7 @@ const SplashScreen = () => {
   }, [navigate]);
 
   return (
+<<<<<<< HEAD
     <div className="h-screen w-screen bg-black flex flex-col items-center justify-center relative overflow-hidden">
       {/* Logo */}
       <img src={logo} alt="Feminae Logo" className="w-36 h-auto mb-8 z-10" />
@@ -23,6 +24,14 @@ const SplashScreen = () => {
         <Ripple className="text-white opacity-50" /> {/* Customize ripple for white color */}
       </div>
     </div>
+=======
+    <>
+      <div className="h-screen w-screen flex flex-col items-center justify-center overflow-hidden fixed top-0 left-0">
+        <img src={logo} alt="Feminae Logo" className="w-60 h-auto mb-8" />
+        <Ripple />
+      </div>
+    </>
+>>>>>>> main
   );
 };
 
