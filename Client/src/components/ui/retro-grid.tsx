@@ -7,7 +7,7 @@ interface RetroGridProps extends React.HTMLAttributes<HTMLDivElement> {
   className?: string;
   /**
    * Rotation angle of the grid in degrees
-   * @default 65
+   * @default 70
    */
   angle?: number;
   /**
@@ -34,7 +34,7 @@ interface RetroGridProps extends React.HTMLAttributes<HTMLDivElement> {
 
 export default function RetroGrid({
   className,
-  angle = 65,
+  angle = 50,
   cellSize = 60,
   opacity = 0.5,
   lightLineColor = "gray",
