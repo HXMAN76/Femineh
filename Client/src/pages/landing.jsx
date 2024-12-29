@@ -8,6 +8,7 @@ import RetroGrid from "@/components/ui/retro-grid"; // Import RetroGrid componen
 
 const LandingPage = () => {
   return (
+    <>
     <div className="h-screen w-screen bg-black relative overflow-hidden">
       {/* Background Stars */}
       <div className="absolute inset-0">
@@ -55,32 +56,6 @@ const LandingPage = () => {
       </div>
 
       {/* Interactive Buttons */}
-      <div className="absolute bottom-8 left-8">
-        <motion.div
-          initial={{ opacity: 0, x: -100 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, delay: 2 }}
-        >
-          <Link to="/login">
-            <Button className="bg-white text-black font-bold py-3 px-6 rounded-md shadow-lg hover:bg-gray-300">
-              Login
-            </Button>
-          </Link>
-        </motion.div>
-      </div>
-
-      <div className="absolute bottom-8 right-8">
-        <motion.div
-          initial={{ opacity: 0, x: 100 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, delay: 2.5 }}
-        >
-          <Link to="/signup">
-            <Button className="bg-white text-black font-bold py-3 px-6 rounded-md shadow-lg hover:bg-gray-300">
-              Signup
-            </Button>
-          </Link>
-        </motion.div>
         <div className="absolute bottom-0 left-0 right-0 h-1/2">
           <RetroGrid
             className="w-full h-full"
@@ -91,8 +66,8 @@ const LandingPage = () => {
             darkLineColor="#DDDDDD"
           />
         </div>
-       
-        {/* Interactive Buttons */}
+
+      {/* Interactive Buttons */}
       <div className="absolute bottom-40 left-0 right-0 flex justify-center">
         <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
           <motion.div
@@ -102,7 +77,7 @@ const LandingPage = () => {
           >
             <Link to="/login">
               <button
-                className="bg-pink-500 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-pink-600 hover:scale-105 transition-all duration-300 w-40"
+                className="bg-white text-black font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-black hover:text-white hover:scale-105 transition-all duration-300 w-40"
               >
                 Login
               </button>
@@ -116,7 +91,7 @@ const LandingPage = () => {
           >
             <Link to="/signup">
               <button
-                className="bg-pink-500 text-white font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-pink-600 hover:scale-105 transition-all duration-300 w-40"
+                className="bg-white text-black font-bold py-3 px-6 rounded-lg shadow-lg hover:bg-black hover:text-white hover:scale-105 transition-all duration-300 w-40"
               >
                 Signup
               </button>
@@ -125,6 +100,7 @@ const LandingPage = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@radix-ui/react-slot": "^1.1.1",
+    "@radix-ui/themes": "^3.1.6",
     "@typescript-eslint/eslint-plugin": "^8.18.2",
     "@typescript-eslint/parser": "^8.18.2",
     "autoprefixer": "^10.4.20",
