@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { FiCamera, FiPaperclip, FiMenu, FiX } from "react-icons/fi";
+import React, { useState, useEffect, useRef } from "react";
+import { FiPaperclip, FiMenu, FiX, FiTrash2 } from "react-icons/fi";
 import { Link } from "react-router-dom";
 
 const ChatPage = () => {
@@ -42,32 +42,39 @@ const ChatPage = () => {
 
   const handleChatClick = (index) => {
     setActiveChatIndex(index);
-    setSidebarOpen(false); // Close sidebar on chat selection
+    setSidebarOpen(false);
+  };
+
+  const handleKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleSendMessage();
+    }
+  };
+
+  const handleDeleteChat = (index) => {
+    const updatedChats = chats.filter((_, chatIndex) => chatIndex !== index);
+    setChats(updatedChats);
+    if (activeChatIndex === index) {
+      setActiveChatIndex(0);
+    } else if (activeChatIndex > index) {
+      setActiveChatIndex(activeChatIndex - 1);
+    }
+    if (updatedChats.length === 0) {
+      setActiveChatIndex(0);
+    } else if (activeChatIndex >= updatedChats.length) {
+      setActiveChatIndex(updatedChats.length - 1);
+    }
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        height: "100vh",
-        backgroundColor: "rgb(32, 33, 36)",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          flex: 1,
-          flexDirection: "row",
-          marginBottom: "56px", // Add margin to avoid overlap with the navbar
-        }}
-      >
+    <div style={{ display: "flex", flexDirection: "column", height: "100vh", backgroundColor: "black" }}>
+      <div style={{ display: "flex", flex: 1, flexDirection: "row", marginBottom: "56px" }}>
         {/* Sidebar */}
         <div
           style={{
             width: sidebarOpen ? "20%" : "0",
             minWidth: sidebarOpen ? "200px" : "0",
-            backgroundColor: "rgb(47, 49, 54)",
+            backgroundColor: "black",
             color: "white",
             padding: sidebarOpen ? "1rem" : "0",
             display: sidebarOpen ? "flex" : "none",
@@ -76,37 +83,41 @@ const ChatPage = () => {
             borderRight: sidebarOpen ? "1px solid rgba(255, 255, 255, 0.2)" : "none",
             overflow: "hidden",
             transition: "all 0.3s ease-in-out",
+            position: "relative",
           }}
         >
           <div>
-            <h2
-              style={{
-                margin: "0 0 1rem 0",
-                fontSize: "1.5rem",
-                fontWeight: "bold",
-                color: "#FFFFFF",
-              }}
-            >
+            <h2 style={{ margin: "0 0 1rem 0", fontSize: "1.5rem", fontWeight: "bold", color: "#FFFFFF" }}>
               Previous Chats
             </h2>
             <ul style={{ listStyleType: "none", padding: 0 }}>
               {chats.map((chat, index) => (
                 <li
                   key={index}
-                  onClick={() => handleChatClick(index)}
                   style={{
                     padding: "0.5rem 0.8rem",
                     margin: "0.5rem 0",
-                    backgroundColor:
-                      index === activeChatIndex
-                        ? "rgba(255, 255, 255, 0.1)"
-                        : "rgba(255, 255, 255, 0.05)",
+                    backgroundColor: index === activeChatIndex ? "rgba(255, 255, 255, 0.1)" : "rgba(255, 255, 255, 0.05)",
                     borderRadius: "8px",
                     cursor: "pointer",
                     color: "#FFFFFF",
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
                   }}
                 >
-                  {chat.title}
+                  <span onClick={() => handleChatClick(index)}>{chat.title}</span>
+                  <button
+                    onClick={() => handleDeleteChat(index)}
+                    style={{
+                      background: "none",
+                      border: "none",
+                      color: "white",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <FiTrash2 />
+                  </button>
                 </li>
               ))}
             </ul>
@@ -120,15 +131,42 @@ const ChatPage = () => {
               borderRadius: "8px",
               cursor: "pointer",
               fontWeight: "bold",
+              marginBottom: "1rem",
             }}
-            onClick={() =>
-              setChats([
-                ...chats,
-                { title: `New Chat ${chats.length + 1}`, messages: [] },
-              ])
-            }
+            onClick={() => setChats([...chats, { title: `New Chat ${chats.length + 1}`, messages: [] }])}
           >
             + Start New Chat
+          </button>
+          <button
+            style={{
+              backgroundColor: "rgb(68, 70, 84)",
+              color: "white",
+              border: "none",
+              padding: "0.5rem",
+              borderRadius: "8px",
+              cursor: "pointer",
+              fontWeight: "bold",
+            }}
+            onClick={() => window.location.reload()}
+          >
+            New Chat
+          </button>
+          <button
+            onClick={() => setSidebarOpen(false)}
+            style={{
+              position: "absolute",
+              top: "1rem",
+              right: "1rem",
+              backgroundColor: "black",
+              color: "white",
+              border: "none",
+              padding: "0.5rem 1rem",
+              borderRadius: "8px",
+              cursor: "pointer",
+              zIndex: 20,
+            }}
+          >
+            <FiX size={24} />
           </button>
         </div>
 
@@ -140,26 +178,18 @@ const ChatPage = () => {
               overflowY: "auto",
               padding: "1rem",
               color: "white",
-              backgroundColor: "rgb(40, 41, 48)",
+              backgroundColor: "black",
               borderBottom: "1px solid rgba(255, 255, 255, 0.2)",
             }}
           >
             {chats[activeChatIndex]?.messages.map((message, index) => (
-              <div
-                key={index}
-                style={{
-                  textAlign: message.isUser ? "right" : "left",
-                  margin: "0.5rem 0",
-                }}
-              >
+              <div key={index} style={{ textAlign: message.isUser ? "right" : "left", margin: "0.5rem 0" }}>
                 <span
                   style={{
                     display: "inline-block",
                     padding: "0.8rem",
                     borderRadius: "12px",
-                    backgroundColor: message.isUser
-                      ? "rgb(33, 150, 243)"
-                      : "rgb(70, 70, 75)",
+                    backgroundColor: message.isUser ? "rgb(33, 150, 243)" : "rgb(70, 70, 75)",
                     color: "white",
                     maxWidth: "70%",
                   }}
@@ -171,14 +201,7 @@ const ChatPage = () => {
           </div>
 
           {/* Input Section */}
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              padding: "1rem",
-              backgroundColor: "rgb(47, 49, 54)",
-            }}
-          >
+          <div style={{ display: "flex", alignItems:   "center", padding: "1rem", backgroundColor: "black" }}>
             <button
               style={{
                 background: "none",
@@ -190,18 +213,6 @@ const ChatPage = () => {
               }}
             >
               <FiPaperclip />
-            </button>
-            <button
-              style={{
-                background: "none",
-                border: "none",
-                color: "white",
-                fontSize: "1.5rem",
-                cursor: "pointer",
-                marginRight: "0.5rem",
-              }}
-            >
-              <FiCamera />
             </button>
             <input
               style={{
@@ -218,6 +229,7 @@ const ChatPage = () => {
               placeholder="Type your message here..."
               value={input}
               onChange={(e) => setInput(e.target.value)}
+              onKeyPress={handleKeyPress}
             />
             <button
               style={{
@@ -239,58 +251,45 @@ const ChatPage = () => {
       </div>
 
       {/* Navigation */}
-      <nav
-        className="fixed bottom-0 left-0 right-0 bg-black py-3 shadow-md flex justify-around"
-        style={{ zIndex: 10 }}
-      >
-        <Link
-          to="/homepage"
-          className="text-center text-gray-400 hover:text-white transition"
-        >
+      <nav className="fixed bottom-0 left-0 right-0 bg-black py-3 shadow-md flex justify-around" style={{ zIndex: 10 }}>
+        <Link to="/homepage" className="text-center text-gray-400 hover:text-white transition">
           <div>🏠</div>
           <span className="text-xs">Home</span>
         </Link>
-        <Link
-          to="/chatpage"
-          className="text-center text-gray-400 hover:text-white transition"
-        >
+        <Link to="/chatpage" className="text-center text-gray-400 hover:text-white transition">
           <div>🤖</div>
           <span className="text-xs">AI Chat</span>
         </Link>
-        <Link
-          to="/calendar"
-          className="text-center text-gray-400 hover:text-white transition"
-        >
+        <Link to="/calendar" className="text-center text-gray-400 hover:text-white transition">
           <div>📅</div>
           <span className="text-xs">Calendar</span>
         </Link>
-        <Link
-          to="/profile"
-          className="text-center text-gray-400 hover:text-white transition"
-        >
+        <Link to="/profile" className="text-center text-gray-400 hover:text-white transition">
           <div>👤</div>
           <span className="text-xs">Profile</span>
         </Link>
       </nav>
 
       {/* Sidebar Toggle Button */}
-      <button
-        onClick={() => setSidebarOpen(!sidebarOpen)}
-        style={{
-          position: "fixed",
-          top: "1rem",
-          left: "1rem",
-          backgroundColor: "rgb(47, 49, 54)",
-          color: "white",
-          border: "none",
-          padding: "0.5rem 1rem",
-          borderRadius: "8px",
-          cursor: "pointer",
-          zIndex: 20,
-        }}
-      >
-        {sidebarOpen ? <FiX size={24} /> : <FiMenu size={24} />}
-      </button>
+      {!sidebarOpen && (
+        <button
+          onClick={() => setSidebarOpen(true)}
+          style={{
+            position: "fixed",
+            top: "1rem",
+            left: "1rem",
+            backgroundColor: "black",
+            color: "white",
+            border: "none",
+            padding: "0.5rem 1rem",
+            borderRadius: "8px",
+            cursor: "pointer",
+            zIndex: 20,
+          }}
+        >
+          <FiMenu size={24} />
+        </button>
+      )}
     </div>
   );
 };
