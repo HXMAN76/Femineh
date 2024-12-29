@@ -31,11 +31,7 @@ const Ripple = React.memo(function Ripple({
         return (
           <div
             key={i}
-<<<<<<< HEAD
             className={`absolute animate-ripple rounded-full border-white`}
-=======
-            className={`absolute animate-ripple rounded-full bg-[#1c36a8] shadow-xl border [--i:${i}]`}
->>>>>>> main
             style={
               {
                 width: `${size}px`,
@@ -43,13 +39,8 @@ const Ripple = React.memo(function Ripple({
                 opacity,
                 animationDelay,
                 borderStyle,
-<<<<<<< HEAD
                 borderWidth: "2px", // Increased border width for prominence
                 borderColor: `rgba(255, 255, 255, ${borderOpacity / 100})`, // Ensure white color
-=======
-                borderWidth: "1px",
-                borderColor: `#16423C`,
->>>>>>> main
                 top: "50%",
                 left: "50%",
                 transform: "translate(-50%, -50%) scale(1)",

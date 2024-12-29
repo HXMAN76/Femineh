@@ -3,7 +3,6 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-<<<<<<< HEAD
 import { Button } from "@/components/ui/button"; // Shadcn button
 import RetroGrid from "@/components/ui/retro-grid"; // Import RetroGrid component
 
@@ -81,41 +80,6 @@ const LandingPage = () => {
               Signup
             </Button>
           </Link>
-=======
-import RetroGrid from "@/components/ui/retro-grid";
-import modelsImage from "../assets/models.png"; // Import the image directly
-
-const LandingPage = () => {
-  return (
-    <div className="h-screen w-screen relative overflow-hidden bg-gradient-to-b from-[#e7a2b5] to-[#e7a2b5]">
-      {/* Upper Part with Sky Gradient */}
-      <div className="absolute inset-0 bg-gradient-to-b from-[#e7a2b5] to-transparent">
-        <div className="absolute top-0 left-0 w-full h-1/2 bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-20"></div>
-      </div>
-      <motion.div
-          initial={{ opacity: 0, y: -50 }}
-          animate={{ opacity: 0.8, y: 0 }}
-          transition={{ duration: 1.2, delay: 0.2 }}
-          className="flex justify-center items-center"
-        >
-          <img
-            src={modelsImage}
-            alt="Models"
-            className="mx-auto w-3/4 sm:w-1/2 md:w-1/3 lg:w-1/4 mb-8" // Responsive width
-          />
-        </motion.div>
-        <motion.div
-          initial={{ opacity: 0, y: -50 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, delay: 0.5 }}
-          className="absolute w-full text-center flex justify-center items-center"
-        >
-          <h1
-            className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold bg-gradient-to-r from-[#526ea7] to-[#000000] text-transparent bg-clip-text tracking-wide"
-          >
-            WELCOME TO FEMINAE
-          </h1>
->>>>>>> main
         </motion.div>
         <div className="absolute bottom-0 left-0 right-0 h-1/2">
           <RetroGrid
