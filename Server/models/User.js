@@ -1,13 +1,13 @@
-// server/models/User.js
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
   name: { type: String, default: "" },
-  email: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  // We'll store the big form data in a "profile" subdocument
+  mrn: { type: String, unique: true }, // Medical Record Number
+
+  // Profile information
   profile: {
-    // Basic Info
     fullName: String,
     dateOfBirth: Date,
     gender: String,
@@ -17,8 +17,6 @@ const userSchema = new mongoose.Schema({
     currentMedications: String,
     allergies: String,
     lifestyleHabits: String,
-
-    // Reproductive
     reproductiveStage: String,
     averageCycleLength: Number,
     lastPeriodDate: Date,
@@ -28,12 +26,8 @@ const userSchema = new mongoose.Schema({
     weeksPostpartum: Number,
     postpartumIssues: String,
     menopausalSymptoms: String,
-
-    // Preferences
     dietaryPreferences: String,
     notificationPreferences: String,
-
-    // Emergency
     emergencyContact: String,
     bloodGroup: String
   }

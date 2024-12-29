@@ -1,4 +1,3 @@
-// server/index.js
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
@@ -17,7 +16,7 @@ mongoose
     "mongodb+srv://kavineshp11:1amKTG%401@cluster0.qayni.mongodb.net/?retryWrites=true&w=majority",
     {
       useNewUrlParser: true,
-      useUnifiedTopology: true
+      useUnifiedTopology: true,
     }
   )
   .then(() => console.log("Connected to MongoDB Atlas"))
