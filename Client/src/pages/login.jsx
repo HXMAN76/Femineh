@@ -19,7 +19,7 @@ const Login = () => {
 
       const data = await response.json();
       if (response.ok) {
-        localStorage.setItem("userId", data.user._id);
+        localStorage.setItem("mrn", data.mrn);
         navigate("/homepage");
       } else {
         alert(data.message || "Login failed");

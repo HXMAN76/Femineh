@@ -26,6 +26,8 @@ const PROMPT_SUGGESTIONS = [
   },
 ];
 
+const chat_hist = {history: []};
+
 export default function App() {
   const [messages, setMessages] = useState([]);
   const [query, setQuery] = useState("");
@@ -61,11 +63,14 @@ export default function App() {
     setQuery("");
     setIsLoading(true);
 
+    const mrn = localStorage.getItem('mrn');
     try {
       const response = await fetch(
-        `http://localhost:8000/search?query=${encodeURIComponent(query)}`
+        `http://192.168.45.18:3000/search?query=${encodeURIComponent(query)}&mrn=${encodeURIComponent(mrn)}&history=${encodeURIComponent(JSON.stringify(chat_hist))}`
       );
       const data = await response.json();
+      chat_hist.history.push({ User: query, Bot: data.message });
+      localStorage.setItem('chat_history', JSON.stringify(chat_hist))
       setMessages((prev) => [...prev, { text: data.message, sender: "bot" }]);
     } catch {
       setMessages((prev) => [

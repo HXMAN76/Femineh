@@ -14,6 +14,9 @@ import Book from "./pages/book";
 import Laugh from "./pages/laugh";
 import Child from "./pages/child";
 import Yoga from "./pages/yoga"
+import Alone from "./pages/alone"
+import CommunityPage from "./pages/CommunityPage";
+import DocDash from './pages/DocDash';
 
 import "./App.css";
 
@@ -36,6 +39,9 @@ function App() {
         <Route path="/laugh" element={<Laugh />} />
         <Route path="/child" element={<Child />} />
         <Route path="/yoga" element={<Yoga />} />
+        <Route path="/alone" element={<Alone />} />
+        <Route path="/CommunityPage" element={<CommunityPage />} />
+        <Route path="/docdash" element={<DocDash />} />
       </Routes>
     </Router>
   );
